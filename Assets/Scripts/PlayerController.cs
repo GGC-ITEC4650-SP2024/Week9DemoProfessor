@@ -29,6 +29,12 @@ public class PlayerController : MonoBehaviour
             numJumps--;
         }
         myBod.velocity = v;
+
+        if(h > 0) {
+            transform.localScale = new Vector3(-1, 1, 1);
+        } else if (h < 0) {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)
