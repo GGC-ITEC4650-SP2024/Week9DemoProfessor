@@ -29,7 +29,6 @@ public class PlayerController : MonoBehaviour
             numJumps--;
         }
         myBod.velocity = v;
-
     }
 
     void OnTriggerEnter2D(Collider2D col)
