@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     Rigidbody2D myBod;
+    Animator myAnim;
     public float speed;
     public float jumpPower;
     public int maxJumps;
@@ -15,6 +16,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         myBod = GetComponent<Rigidbody2D>();
+        myAnim = GetComponent<Animator>();
         numJumps = 0;
     }
 
@@ -30,11 +32,17 @@ public class PlayerController : MonoBehaviour
         }
         myBod.velocity = v;
 
+        //direction
         if(h > 0) {
             transform.localScale = new Vector3(-1, 1, 1);
         } else if (h < 0) {
             transform.localScale = new Vector3(1, 1, 1);
         }
+
+        // animations
+        myAnim.SetBool("RUN", h != 0);
+        myAnim.SetBool("ATTACK", Input.GetButtonDown("Fire1"));
+
     }
 
     void OnTriggerEnter2D(Collider2D col)
