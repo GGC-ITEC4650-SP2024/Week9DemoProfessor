@@ -20,7 +20,7 @@ public class PickUp : MonoBehaviour
 
     //Called when my gameObject collides with another
     //Requires at least 1 of the gameObjects to have a Rigidbody or CharacterController.
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         invMgr.addItemByName(name);
         Destroy(gameObject);

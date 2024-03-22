@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    public int health;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +19,11 @@ public class EnemyController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col) {
         if(col.tag == "Weapon") {
-            Destroy(gameObject);
+            Weapon w = col.GetComponent<Weapon>();
+            health -= w.damage;
+            if(health <= 0) {
+                Destroy(gameObject);
+            }
         }
     }
 }

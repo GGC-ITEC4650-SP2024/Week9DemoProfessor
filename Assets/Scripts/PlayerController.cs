@@ -6,6 +6,10 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody2D myBod;
     Animator myAnim;
+    Weapon[] myWeapons;
+
+    InvManager invMgr;
+
     public float speed;
     public float jumpPower;
     public int maxJumps;
@@ -17,7 +21,11 @@ public class PlayerController : MonoBehaviour
     {
         myBod = GetComponent<Rigidbody2D>();
         myAnim = GetComponent<Animator>();
+        myWeapons = GetComponentsInChildren<Weapon>();
+        invMgr = GameObject.Find("Inv").GetComponent<InvManager>();
         numJumps = 0;
+
+        equipCurrentWeapon();
     }
 
     // Update is called once per frame
@@ -43,12 +51,30 @@ public class PlayerController : MonoBehaviour
         myAnim.SetBool("RUN", h != 0);
         myAnim.SetBool("ATTACK", Input.GetButtonDown("Fire1"));
 
+        if(Input.GetButtonDown("Fire2")) {
+            invMgr.selectNextItem();
+            equipCurrentWeapon();
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
         if(col.tag == "Ground") {
             numJumps = maxJumps;
+        }
+    }
+
+    public void equipCurrentWeapon() {
+        //turn off all weapons, except the current selected one
+        Item item = invMgr.getSelectedItem();
+        //loop through all weapons and check for matching name
+        for(int i = 0; i < myWeapons.Length; i++) {
+            if(myWeapons[i].name == item.name) {
+                myWeapons[i].equip();
+            }
+            else {
+                myWeapons[i].unequip();
+            }
         }
     }
 }
